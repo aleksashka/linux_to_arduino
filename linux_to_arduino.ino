@@ -36,7 +36,12 @@ void loop() {
       stage = 0;
       Serial.print("Stage: ");Serial.println(stage);
       if (i == mesLen) {
-        showWeather(inData[0], pixels.Color(inData[1],inData[2],inData[3]), delayval);
+        if ( mesType == 0 ) {
+          setPix(inData[0], pixels.Color(0,0,0));
+        } else if ( mesType == 1 ) {
+          setPix(inData[0], pixels.Color(inData[1],inData[2],inData[3]));
+        }
+        //showWeather(inData[0], pixels.Color(inData[1],inData[2],inData[3]), delayval);
       } else {
         Serial.println("Transaction is bad");
       }
@@ -60,6 +65,11 @@ void loop() {
   //showWeather(0, pixels.Color(0,50,0), delayval);
   //showWeather(0, pixels.Color(0,0,50), delayval);
   //delay(delayval*5); // Delay for a period of time (in milliseconds).
+}
+
+void setPix(int pix, uint32_t c) {
+  pixels.setPixelColor(pix, c);
+  pixels.show();
 }
 
 void showWeather(int pix, uint32_t c, uint16_t wait) {
